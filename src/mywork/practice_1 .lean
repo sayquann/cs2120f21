@@ -27,8 +27,8 @@ is prop_1. The type of the value is Prop (which is the type of
 all propositions in Lean). 
 -/
 
-def prop_1 : ∀ (T: Type), ∀ (x y z w :T ),  x=y →  y=z  → w=z → z=w := 
-  
+def prop_1 : Prop:=
+  ∀ (T : Type ), ∀ (x y z w : T), x=y → y=z → w=z → z=w
 
 /- #3 (extra credit)
 Give a formal proof of the proposition from #2 by filling in
@@ -36,16 +36,14 @@ the hole in this next definition. Hint: Use Lean's versions of
 the axioms and basic theorems concerning equality. They are,
 again, called eq.refl, eq.subst, eq.symm, eq.trans.
 -/
-
-theorem prop_1_proof : ∀ (T: Type), ∀ (x y z w :T ),  x=y →  y=z  → w=z → z=w := 
+theorem prop_1_proof : prop_1 := 
 begin
-  assume T,
-  assume x y z w,
-  assume h1,
-  assume h2,
-  assume h3,
+  assume T x y z w,
+  assume h1 h2 h3,
   rw h3,
 end
+
+
 
 /-
 FOR ALL: ∀. 
@@ -116,11 +114,8 @@ you are asked to use the elimination rule for →.
 
 axiom pf_raining : raining
 
-example : streets_wet :=
-begin
- assume raining,
- raining → streets_wet,
-end
+example : streets_wet := if_raining_then_streets_wet  pf_raining
+
 
 
 /- 
@@ -166,8 +161,15 @@ theorem and_associative :
   ∀ (P Q R : Prop),
   (P ∧ (Q ∧ R)) → ((P ∧ Q) ∧ R) :=
 begin
-  intros P Q R h,
+  assume P Q R,
+  assume h,
+  have qr: Q ∧ R := and.elim_right h,
+  have q: Q := and.elim_left qr,
+  have r :R := and.elim_right qr,
   have p : P := and.elim_left h,
+  apply and.intro _ _,
+ apply and.intro  p q,
+  apply r, 
 end
 
 /- #11
@@ -181,10 +183,10 @@ proof, let's call it p_qr, of (P ∧ (Q ∧ R)) [by
 application of ∧ and → introduction.] What now
 remains to be proved is ((P ∧ Q) ∧ R). We can
 construct a proof of this proposition by applying
-_____ to a proof of (P ∧ Q) and a proof of R.
+the introductionrule to a proof of (P ∧ Q) and a proof of R.
 What remains, then, is to obtain these proofs.
 But this is easily done by the application of
-____ to ____. QED. 
+the elimination rule to (P ∧ (Q ∧ R)). QED. 
 -/
 
 
