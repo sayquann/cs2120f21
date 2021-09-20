@@ -1,6 +1,8 @@
 /-
-Sinan Seslikaya ss6gw
-worked with Alex Fetea pvn5nv
+
+group name: sasa
+Sinan Seslikaya ss6gw https://github.com/sinanseslikaya/cs2120f21.git
+Alex Fetea pvn5nv https://github.com/AlexFetea/cs2120f21.git
 
 EQUALITY
 -/
