@@ -12,10 +12,36 @@ example : false := _    -- trick question? why?
 
 example : ∀ (P : Prop), P ∨ P ↔ P := 
 begin
+    assume P, 
+  apply iff.intro _ _,
+  -- forward
+    assume porp,
+    apply or.elim porp,
+    -- left disjunct is true
+      assume p,
+      exact p,
+    -- right disjunct is true
+      assume p,
+      exact p,
+  -- backwards
+    assume p,
+    exact or.intro_left P p,
 end
 
 example : ∀ (P : Prop), P ∧ P ↔ P := 
 begin
+    assume P,
+  apply iff.intro _ _,
+    assume prop,
+    apply and.elim prop,
+      assume p,
+    assume p,
+    exact p,
+    assume prop,
+  apply and.intro _ _,
+  apply prop,
+  apply prop,
+  
 end
 
 example : ∀ (P Q : Prop), P ∨ Q ↔ Q ∨ P := 
