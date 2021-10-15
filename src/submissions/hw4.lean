@@ -61,7 +61,7 @@ end
 theorem demorgan_1 : ∀ (P Q : Prop), ¬ (P ∧ Q) ↔ ¬ P ∨ ¬ Q :=
 begin
   assume P Q,
-  apply iff.intro,
+  split, --apply iff.intro,
   --forward
   assume notpq,
   cases (classical.em P) with p np,
