@@ -1,3 +1,5 @@
+import data.set
+
 /-
 CS2120 F21 HW5
 
@@ -19,8 +21,8 @@ of these types: α and β, respectively.
 -/
 
 axioms 
-  (α β : Type)
-  (p : α → Prop)
+  (α β : Type)    -- data types
+  (p : α → Prop)  -- predicates
   (q : β → Prop)
 
 /-
@@ -54,8 +56,3 @@ begin
 end
   
 
-/- 
-PART II: BASIC SET THEORY
-
-stay tuned!
--/
