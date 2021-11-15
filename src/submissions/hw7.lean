@@ -49,6 +49,7 @@ end
 
 
 
+
 /-
 #2. Logic, like programming, is subtle. It's very easy for humans
 to miss subtle corner cases. As an example, today I ran across
@@ -75,10 +76,6 @@ begin
   have prop2:= a prop,
   contradiction,
 end
-
-
-
-
 
 /-
 #3: Prove that the subset relation on the powerset of any
@@ -245,16 +242,21 @@ end
 example : irreflexive r → transitive r → asymmetric r :=
 begin
   unfold irreflexive transitive asymmetric,
-  assume x,
-  assume x y z,
-  assume ryz,
-  assume rzy,
-
+  assume irefl,
+  assume trans,
+  assume b,
+  assume b1,
+  assume b2,
+  assume b3,
+  have c:= trans b2 b3,
+  have d:= irefl b,
+  contradiction,
 end
 
 -- C
 example : transitive r → ¬ symmetric r → ¬ irreflexive r :=
 begin
+  
 end
 
 
