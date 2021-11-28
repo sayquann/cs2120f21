@@ -1,17 +1,19 @@
-/-
--/
 
-theorem and_associative : 
-  ∀ (P Q R : Prop), (P ∧ Q) ∧ R → P ∧ (Q ∧ R) :=
+
+theorem and_associative: ∀ (P Q R : Prop), (P∧ Q)∧ R → P ∧ (Q ∧ R):=
 begin
   assume P Q R,
   assume h,
-  have pq : P ∧ Q := and.elim_left h,
-  have p : P := and.elim_left pq,
-  have q : Q := and.elim_right pq,
+  have pq: P ∧ Q := and.elim_left h,
+  have p : P  := and.elim_left pq,
+  have q :  Q := and.elim_right  pq,
   have r : R := and.elim_right h,
   exact and.intro p (and.intro q r),
 end
+
+
+
+
 
 /-
 The or connective, ∨, in predicate logic
@@ -74,10 +76,15 @@ Let's formalize our example in Lean.
 -/
 
 axioms (Joe_is_tall Joe_chews_gum : Prop)
-axiom jcg: Joe_chews_gum
+axiom jcg: Joe_chews_gum -- jcg is the proof that Joe_chews_gum
 
 theorem jcg_or_jit: Joe_chews_gum ∨ Joe_is_tall :=
   or.intro_left Joe_is_tall jcg 
+
+/-
+Exercise: Formalize our second version of this
+proposition and a proof of it.
+-/
 
 /-
 We thus have two inference rules (axioms) that we
