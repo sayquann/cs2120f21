@@ -184,33 +184,18 @@ example :
   surjective r → 
   image_set r (dom r) = { b : β | true } :=
 begin
-  assume sur,
-  cases sur with totfunc onto,
+  assume r_sur,
+  unfold surjective at r_sur,
+  unfold total_function at r_sur,
+  unfold defined function at r_sur,
+  unfold single_valued at r_sur,
   unfold image_set dom,
-  cases totfunc with func alldef ,
-  unfold function at func,
-  unfold single_valued at func,
-  unfold defined at alldef,
+  cases r_sur,
+  cases r_sur_left,
   apply set.ext,
-  assume x,
+  assume b,
   split,
-  assume p,
-  apply p x
-  
-  -- apply set.ext,
-  -- assume x,
-  -- split,
-  -- assume p,
-  -- unfold total_function at totfunc,
-  -- assume xe,
-  -- cases totfunc,
-
-  --have c:= rab x,
-  --unfold total_function at totfunc,
-  --unfold defined at totfunc,
-  
-  --have c:= and.elim_right totfunc,
-
+  assume rel,
   
 -- homework (on your own ungraded but please do it!)
 end
@@ -556,6 +541,7 @@ False? Present a counterexample.
 def bij_trans (s : β → γ → Prop)  (r : α → β → Prop) :
   bijective r → bijective s → bijective (composition s r) := 
   begin
+    --unfold
     assume r_bij,
     assume s_bij,
     cases r_bij with r_sur r_inj,
@@ -564,54 +550,105 @@ def bij_trans (s : β → γ → Prop)  (r : α → β → Prop) :
     cases s_bij with s_sur s_inj,
     cases s_sur with s_tot s_onto,
     cases s_inj with s_tot s_one_to_one,
-    unfold bijective,
-    apply and.intro,
-    unfold surjective,
-    unfold total_function,
-    unfold function,
-    unfold single_valued,
     unfold total_function at r_tot,
-  cases r_tot with r_fun defallBeta,
-  unfold defined at defallBeta,
-  unfold function at r_fun,
-  unfold single_valued at r_fun,
+    cases r_tot with r_fun defra,
+    unfold defined at defra,
+    unfold function at r_fun,
+    unfold single_valued at r_fun,
+    unfold total_function at s_tot,
+    cases s_tot with s_fun defsa,
+    unfold function at s_fun,
+    unfold single_valued at s_fun,
+    unfold defined at defsa,
+    unfold bijective composition,
+    unfold surjective injective,
+    unfold total_function,
+    unfold function defined single_valued,
 
-   unfold total_function at s_tot,
-  cases s_tot with s_fun defallGamma,
-  unfold defined at defallGamma,
-  unfold function at s_fun,
-  unfold single_valued at s_fun,
+    --setup
     apply and.intro,
     apply and.intro,
+    apply and.intro,
+
+    --goal one
+
+    assume a y z,
+    assume rel,
+    assume rel2,
+    cases rel with b3 rel3,
+    cases rel3 with sb3y rab3,
+    cases rel2 with b4 rel4,
+    cases rel4 with sb4z rab4,
+    have e:= r_fun ( rab3) rab4 ,
+    apply s_fun,
+    apply sb3y,
+    rw e,
+    apply sb4z,
+
+    --goal two
+    assume a,
+    have extb:= defra a,
+    cases extb with b1 rab1,
+    have extc:= defsa b1,
+    cases extc with b sb1b,
+    have  d:= and.intro sb1b rab1,
+    apply exists.intro b,
+    apply exists.intro b1,
+    apply d,
+
+    --goal three
+    assume y,
+    have extb:= s_onto y,
+    cases extb with b sby,
+    have extc:= r_onto b,
+    cases extc with a rab,
+    apply exists.intro a,
+    apply exists.intro b,
+    have d:= and.intro sby rab,
+    apply d,
+
+    --setup
+    apply and.intro,
+    apply and.intro,
+
+    --goal four
+    assume a y z,
+    assume rel,
+    assume rel2,
+    cases rel with b3 rel3,
+    cases rel3 with sb3y rab3,
+    cases rel2 with b4 rel4,
+    cases rel4 with sb4z rab4,
+    have e:= r_fun ( rab3) rab4 ,
+    apply s_fun,
+    apply sb3y,
+    rw e,
+    apply sb4z,
+
+    --goal five
+    assume a,
+    have extb:= defra a,
+    cases extb with b1 rab1,
+    have extc:= defsa b1,
+    cases extc with b sb1b,
+    have  d:= and.intro sb1b rab1,
+    apply exists.intro b,
+    apply exists.intro b1,
+    apply d,
+
+    --goal six
     assume x y z,
-    assume csrxy csrxz,
-    unfold composition at csrxy csrxz,
-
-  have d:= s_onto y,
-  cases d with b_2 sb2y,
-  cases csrxy with b sbyANDrxb,
-  cases csrxz with b_1 sbzANDrxb,
-  have sby:= and.elim_left sbyANDrxb,
-  have sbz:= and.elim_left sbzANDrxb,
-  apply s_fun ,
-  apply sby,
-  have b_eq : b = b_1 := begin
-    sorry
-    --have f:= s_one_to_one sb2y sby,
-  end,
-  rw b_eq,
-  apply sbz,
-
-  --2nd goal
-  assume a,
-  unfold defined composition,
-  apply exists.intro,
-  apply exists.intro,
-  admit,
-  -- 3rd goal
-  have c:= defallBeta a,
-  have d:= exists.intro c,
-    
+    assume rel,
+    cases rel with b1 sbzNrxb,
+    cases sbzNrxb with sb1z rxb1,
+    assume rel2,
+    cases rel2 with b2 sbzNryb,
+    cases sbzNryb with sb2z ryb2,
+    have e := s_one_to_one sb1z sb2z,
+    apply r_one_to_one,
+    apply  rxb1,
+    rw e,
+    apply ryb2,
   end
 
 /-
